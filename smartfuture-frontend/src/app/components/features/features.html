@@ -1,1 +1,32 @@
-<p>features works!</p>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <div class="text-center mb-16">
+    <h2 class="text-4xl font-bold text-sf-navy mb-4">Nos Formations</h2>
+    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+      Une offre complète de formations certifiantes avec accompagnement personnalisé
+    </p>
+  </div>
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div
+      *ngFor="let feature of features"
+      class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 duration-300"
+    >
+      <div
+        class="w-16 h-16 rounded-full flex items-center justify-center mb-6"
+        [ngClass]="feature.color"
+      >
+        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="feature.icon" />
+        </svg>
+      </div>
+      <h3 class="text-xl font-bold text-sf-navy mb-4">{{ feature.title }}</h3>
+      <p class="text-gray-600">{{ feature.description }}</p>
+    </div>
+  </div>
+
+  <div class="mt-16 text-center">
+    <button class="px-8 py-4 bg-sf-red text-white font-semibold rounded-lg hover:bg-red-600 transition transform hover:scale-105 shadow-xl">
+      Découvrir toutes nos formations
+    </button>
+  </div>
+</div>
