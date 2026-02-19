@@ -1,79 +1,113 @@
 <nav
   class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-  [ngClass]="isScrolled ? 'bg-white shadow-lg' : 'bg-transparent'"
+  [ngClass]="isScrolled ? 'bg-white/95 backdrop-blur-lg shadow-lg' : 'bg-transparent'"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-20">
 
       <!-- Logo -->
       <div class="flex-shrink-0">
-        <a href="#" class="flex items-center">
-          <img
-            src="src\assets\images\logo-smartfuture.png"
-            alt="SmartFuture Logo"
-            class="h-12 w-auto"
-          >
+        <a href="#accueil" (click)="scrollToSection('accueil')" class="flex items-center gap-3 group cursor-pointer">
+          <!-- SVG Logo -->
+          <div class="relative">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Background Circle -->
+              <circle cx="24" cy="24" r="24" [attr.fill]="isScrolled ? '#3B82F6' : '#fff'" class="transition-colors duration-300"/>
+
+              <!-- Book Icon -->
+              <g [attr.stroke]="isScrolled ? '#fff' : '#1E293B'" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 16C14 14.8954 14.8954 14 16 14H20C21.1046 14 22 14.8954 22 16V34C22 35.1046 21.1046 36 20 36H16C14.8954 36 14 35.1046 14 34V16Z"/>
+                <path d="M26 16C26 14.8954 26.8954 14 28 14H32C33.1046 14 34 14.8954 34 16V34C34 35.1046 33.1046 36 32 36H28C26.8954 36 26 35.1046 26 34V16Z"/>
+                <path d="M18 20H19M18 24H19M18 28H19"/>
+                <path d="M29 20H30M29 24H30M29 28H30"/>
+              </g>
+
+              <!-- Brain/AI Accent -->
+              <circle cx="36" cy="14" r="5" fill="#EF4444"/>
+              <path d="M34 14L35.5 15.5L38 13" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+
+            <!-- Pulse Animation -->
+            <div class="absolute inset-0 rounded-full bg-blue-500 opacity-0 group-hover:opacity-20 animate-ping"></div>
+          </div>
+
+          <div class="flex flex-col">
+            <span
+              class="text-2xl font-bold tracking-tight"
+              [ngClass]="isScrolled ? 'text-slate-900' : 'text-white'"
+            >
+              SmartFuture
+            </span>
+            <span
+              class="text-xs font-medium"
+              [ngClass]="isScrolled ? 'text-blue-600' : 'text-blue-300'"
+            >
+              Learning Platform
+            </span>
+          </div>
         </a>
       </div>
 
       <!-- Navigation Desktop -->
-      <div class="hidden md:flex items-center space-x-8">
+      <div class="hidden lg:flex items-center space-x-1">
         <a
-          (click)="scrollToSection('accueil')"
-          class="text-gray-700 hover:text-sf-red font-medium cursor-pointer transition"
+          *ngFor="let item of navItems"
+          (click)="scrollToSection(item.id)"
+          class="px-4 py-2 rounded-lg font-medium transition-all duration-200 cursor-pointer"
+          [ngClass]="isScrolled
+            ? 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
+            : 'text-white hover:bg-white/10'"
         >
-          Accueil
+          {{ item.label }}
         </a>
-        <a
-          (click)="scrollToSection('apropos')"
-          class="text-gray-700 hover:text-sf-red font-medium cursor-pointer transition"
-        >
-          À propos
-        </a>
-        <a
-          (click)="scrollToSection('catalogue')"
-          class="text-gray-700 hover:text-sf-red font-medium cursor-pointer transition"
-        >
-          Catalogue
-        </a>
-        <a
-          (click)="scrollToSection('examens')"
-          class="text-gray-700 hover:text-sf-red font-medium cursor-pointer transition"
-        >
-          Examens Certiport
-        </a>
-        <a
-          (click)="scrollToSection('contact')"
-          class="text-gray-700 hover:text-sf-red font-medium cursor-pointer transition"
-        >
-          Contact
-        </a>
+      </div>
 
+      <!-- Right Side Actions -->
+      <div class="hidden lg:flex items-center gap-4">
         <!-- Language Selector -->
-        <div class="flex items-center space-x-2">
-          <button class="px-2 py-1 text-sm font-medium text-sf-red border-b-2 border-sf-red">
+        <div class="flex items-center gap-1 px-3 py-1 rounded-lg"
+          [ngClass]="isScrolled ? 'bg-slate-100' : 'bg-white/10'">
+          <button
+            class="px-2 py-1 text-sm font-semibold rounded transition-all"
+            [ngClass]="isScrolled
+              ? 'text-blue-600 bg-white shadow-sm'
+              : 'text-white bg-white/20'"
+          >
             FR
           </button>
-          <span class="text-gray-400">|</span>
-          <button class="px-2 py-1 text-sm font-medium text-gray-500 hover:text-sf-red transition">
+          <button
+            class="px-2 py-1 text-sm font-medium rounded transition-all"
+            [ngClass]="isScrolled
+              ? 'text-slate-500 hover:text-slate-700 hover:bg-white'
+              : 'text-gray-300 hover:text-white hover:bg-white/10'"
+          >
             EN
           </button>
         </div>
 
         <!-- Auth Buttons -->
-        <button class="px-4 py-2 text-sm font-medium text-sf-navy border border-sf-navy rounded-lg hover:bg-sf-navy hover:text-white transition">
+        <button
+          class="px-4 py-2 font-medium rounded-lg transition-all duration-200"
+          [ngClass]="isScrolled
+            ? 'text-slate-700 hover:bg-slate-100 border border-slate-200'
+            : 'text-white hover:bg-white/10 border border-white/20'"
+        >
           Se connecter
         </button>
-        <button class="px-4 py-2 text-sm font-medium text-white bg-sf-red rounded-lg hover:bg-red-600 transition shadow-lg">
+
+        <button class="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-200 transform hover:-translate-y-0.5">
           S'inscrire
         </button>
       </div>
 
       <!-- Mobile Menu Button -->
-      <div class="md:hidden">
+      <div class="lg:hidden">
         <button
           (click)="toggleMenu()"
-          class="text-gray-700 hover:text-sf-red focus:outline-none"
+          class="p-2 rounded-lg transition-all"
+          [ngClass]="isScrolled
+            ? 'text-slate-700 hover:bg-slate-100'
+            : 'text-white hover:bg-white/10'"
         >
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
@@ -96,47 +130,25 @@
     </div>
   </div>
 
-  <!-- Mobile Menu -->
+  <!-- Mobile Menu avec animation CSS -->
   <div
     *ngIf="isMenuOpen"
-    class="md:hidden bg-white border-t"
+    class="lg:hidden bg-white border-t shadow-xl animate-slideDown"
   >
-    <div class="px-2 pt-2 pb-3 space-y-1">
+    <div class="px-4 pt-4 pb-6 space-y-2">
       <a
-        (click)="scrollToSection('accueil')"
-        class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-sf-red hover:bg-gray-50 rounded-md cursor-pointer"
+        *ngFor="let item of navItems"
+        (click)="scrollToSection(item.id)"
+        class="block px-4 py-3 text-slate-700 font-medium hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-all"
       >
-        Accueil
+        {{ item.label }}
       </a>
-      <a
-        (click)="scrollToSection('apropos')"
-        class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-sf-red hover:bg-gray-50 rounded-md cursor-pointer"
-      >
-        À propos
-      </a>
-      <a
-        (click)="scrollToSection('catalogue')"
-        class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-sf-red hover:bg-gray-50 rounded-md cursor-pointer"
-      >
-        Catalogue
-      </a>
-      <a
-        (click)="scrollToSection('examens')"
-        class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-sf-red hover:bg-gray-50 rounded-md cursor-pointer"
-      >
-        Examens Certiport
-      </a>
-      <a
-        (click)="scrollToSection('contact')"
-        class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-sf-red hover:bg-gray-50 rounded-md cursor-pointer"
-      >
-        Contact
-      </a>
-      <div class="pt-4 pb-3 border-t">
-        <button class="w-full mb-2 px-4 py-2 text-sm font-medium text-sf-navy border border-sf-navy rounded-lg hover:bg-sf-navy hover:text-white transition">
+
+      <div class="pt-4 border-t space-y-2">
+        <button class="w-full px-4 py-3 text-slate-700 font-medium border border-slate-200 rounded-lg hover:bg-slate-50 transition-all">
           Se connecter
         </button>
-        <button class="w-full px-4 py-2 text-sm font-medium text-white bg-sf-red rounded-lg hover:bg-red-600 transition">
+        <button class="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:shadow-lg transition-all">
           S'inscrire
         </button>
       </div>

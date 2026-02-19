@@ -1,22 +1,27 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './navbar.component.html',
-  
+  imports: [CommonModule],
+  templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
   isMenuOpen = false;
   isScrolled = false;
 
-  ngOnInit() {
-    window.addEventListener('scroll', () => {
-      this.isScrolled = window.scrollY > 20;
-    });
+  navItems = [
+    { id: 'accueil', label: 'Accueil' },
+    { id: 'apropos', label: 'À propos' },
+    { id: 'catalogue', label: 'Catalogue' },
+    { id: 'examens', label: 'Examens Certiport' },
+    { id: 'contact', label: 'Contact' }
+  ];
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    this.isScrolled = window.pageYOffset > 20;
   }
 
   toggleMenu() {
@@ -26,7 +31,15 @@ export class NavbarComponent {
   scrollToSection(sectionId: string) {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      const offset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+
       this.isMenuOpen = false;
     }
   }
