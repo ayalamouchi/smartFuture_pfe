@@ -1,0 +1,147 @@
+<div class="min-h-screen bg-gray-50 flex flex-col">
+  <!-- Header simple -->
+  <div class="bg-white border-b border-gray-200">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div class="flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/" class="flex items-center">
+          <img src="assets/images/logo-smartfuture.png" alt="SmartFuture" class="h-10">
+        </a>
+
+        <!-- Stepper complété -->
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2">
+            <div class="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-sm font-medium text-green-600 hidden sm:inline">Rôle</span>
+          </div>
+
+          <div class="w-12 h-0.5 bg-green-600"></div>
+
+          <div class="flex items-center gap-2">
+            <div class="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-sm font-medium text-green-600 hidden sm:inline">Informations</span>
+          </div>
+
+          <div class="w-12 h-0.5 bg-green-600"></div>
+
+          <div class="flex items-center gap-2">
+            <div class="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-sm font-medium text-green-600 hidden sm:inline">Vérification</span>
+          </div>
+
+          <div class="w-12 h-0.5 bg-green-600 hidden lg:block"></div>
+
+          <div class="items-center gap-2 hidden lg:flex">
+            <div class="w-10 h-10 rounded-full bg-green-600 text-white flex items-center justify-center font-semibold">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <span class="text-sm font-medium text-green-600">Confirmation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-2xl text-center">
+      <!-- Success Icon with animation -->
+      <div class="flex justify-center mb-8">
+        <div class="relative">
+          <div class="w-32 h-32 bg-green-100 rounded-full flex items-center justify-center animate-scaleIn">
+            <svg class="w-16 h-16 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <!-- Rings -->
+          <div class="absolute inset-0 rounded-full border-4 border-green-300 animate-ping"></div>
+        </div>
+      </div>
+
+      <!-- Title & Message -->
+      <div class="mb-8">
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
+          Compte créé avec succès !
+        </h1>
+        <p class="text-lg text-slate-600 mb-2">
+          Votre compte <span class="font-semibold text-blue-600">{{ userRole }}</span> a été créé.
+        </p>
+        <p class="text-lg text-slate-600">
+          Vous pouvez maintenant vous connecter.
+        </p>
+      </div>
+
+      <!-- Next Steps Card -->
+      <div class="bg-blue-50 border border-blue-200 rounded-2xl p-8 mb-8 text-left">
+        <h3 class="text-xl font-bold text-slate-900 mb-6 text-center">Prochaines étapes :</h3>
+
+        <div class="space-y-4">
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 font-semibold">
+              1
+            </div>
+            <div>
+              <h4 class="font-semibold text-slate-900 mb-1">Complétez votre profil</h4>
+              <p class="text-sm text-slate-600">Ajoutez vos informations pour accéder aux formations</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 font-semibold">
+              2
+            </div>
+            <div>
+              <h4 class="font-semibold text-slate-900 mb-1">Explorez le catalogue</h4>
+              <p class="text-sm text-slate-600">Découvrez nos formations certifiantes disponibles</p>
+            </div>
+          </div>
+
+          <div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 font-semibold">
+              3
+            </div>
+            <div>
+              <h4 class="font-semibold text-slate-900 mb-1">Commencez votre parcours</h4>
+              <p class="text-sm text-slate-600">Inscrivez-vous à votre première formation</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA Button -->
+      <button
+        (click)="goToDashboard()"
+        class="w-full sm:w-auto px-12 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+      >
+        Accéder à mon espace
+      </button>
+
+      <!-- Email confirmation notice -->
+      <div class="mt-8 p-4 bg-gray-100 rounded-lg">
+        <div class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-gray-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <div class="text-sm text-gray-600 text-left">
+            <strong class="font-semibold">Note :</strong> Un email de confirmation a été envoyé à votre adresse.
+            Vérifiez votre boîte de réception pour activer toutes les fonctionnalités.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
