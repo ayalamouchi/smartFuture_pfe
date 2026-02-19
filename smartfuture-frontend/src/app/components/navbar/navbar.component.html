@@ -1,26 +1,18 @@
 <nav
   class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-  [ngClass]="isScrolled ? 'bg-white/95 backdrop-blur-lg shadow-lg' : 'bg-transparent'"
+  [ngClass]="isScrolled ? 'bg-slate-800/95 backdrop-blur-lg shadow-lg border-b border-white/10' : 'bg-transparent'"
 >
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-20">
 
       <!-- Logo avec image PNG -->
       <div class="flex-shrink-0">
-        <a href="#accueil" (click)="scrollToSection('accueil')" class="flex items-center gap-3 group cursor-pointer">
-          <!-- Logo Image PNG -->
-          <div class="relative">
-            <img
-              src="assets/images/logo-smartfuture.png"
-              alt="SmartFuture Logo"
-              class="h-12 w-auto transition-transform duration-300 group-hover:scale-110"
-            >
-
-            <!-- Pulse Animation au survol -->
-            <div class="absolute inset-0 rounded-full bg-blue-500 opacity-0 group-hover:opacity-20 animate-ping"></div>
-          </div>
-
-          
+        <a href="#accueil" (click)="scrollToSection('accueil')" class="flex items-center group cursor-pointer">
+          <img
+            src="assets/images/logo-smartfuture.png"
+            alt="SmartFuture Logo"
+            class="h-12 w-auto transition-opacity duration-300 group-hover:opacity-80"
+          >
         </a>
       </div>
 
@@ -29,10 +21,7 @@
         <a
           *ngFor="let item of navItems"
           (click)="scrollToSection(item.id)"
-          class="px-4 py-2 rounded-lg font-medium transition-all duration-200 cursor-pointer"
-          [ngClass]="isScrolled
-            ? 'text-slate-700 hover:text-blue-600 hover:bg-blue-50'
-            : 'text-white hover:bg-white/10'"
+          class="px-4 py-2 rounded-lg font-medium transition-all duration-200 cursor-pointer text-white hover:bg-white/10"
         >
           {{ item.label }}
         </a>
@@ -41,37 +30,21 @@
       <!-- Right Side Actions -->
       <div class="hidden lg:flex items-center gap-4">
         <!-- Language Selector -->
-        <div class="flex items-center gap-1 px-3 py-1 rounded-lg"
-          [ngClass]="isScrolled ? 'bg-slate-100' : 'bg-white/10'">
-          <button
-            class="px-2 py-1 text-sm font-semibold rounded transition-all"
-            [ngClass]="isScrolled
-              ? 'text-blue-600 bg-white shadow-sm'
-              : 'text-white bg-white/20'"
-          >
+        <div class="flex items-center gap-1 px-3 py-1 rounded-lg bg-white/5">
+          <button class="px-2 py-1 text-sm font-semibold rounded transition-all text-blue-400 bg-white/10">
             FR
           </button>
-          <button
-            class="px-2 py-1 text-sm font-medium rounded transition-all"
-            [ngClass]="isScrolled
-              ? 'text-slate-500 hover:text-slate-700 hover:bg-white'
-              : 'text-gray-300 hover:text-white hover:bg-white/10'"
-          >
+          <button class="px-2 py-1 text-sm font-medium rounded transition-all text-gray-400 hover:text-white hover:bg-white/10">
             EN
           </button>
         </div>
 
         <!-- Auth Buttons -->
-        <button
-          class="px-4 py-2 font-medium rounded-lg transition-all duration-200"
-          [ngClass]="isScrolled
-            ? 'text-slate-700 hover:bg-slate-100 border border-slate-200'
-            : 'text-white hover:bg-white/10 border border-white/20'"
-        >
+        <button class="px-4 py-2 font-medium rounded-lg transition-all duration-200 text-white border border-white/20 hover:bg-white/10">
           Se connecter
         </button>
 
-        <button class="px-6 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-200 transform hover:-translate-y-0.5">
+        <button class="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-200 shadow-lg">
           S'inscrire
         </button>
       </div>
@@ -80,10 +53,7 @@
       <div class="lg:hidden">
         <button
           (click)="toggleMenu()"
-          class="p-2 rounded-lg transition-all"
-          [ngClass]="isScrolled
-            ? 'text-slate-700 hover:bg-slate-100'
-            : 'text-white hover:bg-white/10'"
+          class="p-2 rounded-lg transition-all text-white hover:bg-white/10"
         >
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path
@@ -106,25 +76,25 @@
     </div>
   </div>
 
-  <!-- Mobile Menu avec animation CSS -->
+  <!-- Mobile Menu -->
   <div
     *ngIf="isMenuOpen"
-    class="lg:hidden bg-white border-t shadow-xl animate-slideDown"
+    class="lg:hidden bg-slate-800/95 backdrop-blur-lg border-t border-white/10 shadow-xl animate-slideDown"
   >
     <div class="px-4 pt-4 pb-6 space-y-2">
       <a
         *ngFor="let item of navItems"
         (click)="scrollToSection(item.id)"
-        class="block px-4 py-3 text-slate-700 font-medium hover:bg-blue-50 hover:text-blue-600 rounded-lg cursor-pointer transition-all"
+        class="block px-4 py-3 text-white font-medium hover:bg-white/10 rounded-lg cursor-pointer transition-all"
       >
         {{ item.label }}
       </a>
 
-      <div class="pt-4 border-t space-y-2">
-        <button class="w-full px-4 py-3 text-slate-700 font-medium border border-slate-200 rounded-lg hover:bg-slate-50 transition-all">
+      <div class="pt-4 border-t border-white/10 space-y-2">
+        <button class="w-full px-4 py-3 text-white font-medium border border-white/20 rounded-lg hover:bg-white/10 transition-all">
           Se connecter
         </button>
-        <button class="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:shadow-lg transition-all">
+        <button class="w-full px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all">
           S'inscrire
         </button>
       </div>

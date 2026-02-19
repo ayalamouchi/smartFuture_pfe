@@ -1,127 +1,65 @@
-<section id="accueil" class="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+<section id="accueil" class="relative min-h-screen flex items-center overflow-hidden bg-gradient-to-br from-slate-800 via-slate-900 to-blue-900">
 
-  <!-- Animated Background Pattern -->
-  <div class="absolute inset-0 overflow-hidden">
-    <div class="absolute w-full h-full opacity-10">
-      <div class="absolute top-0 -left-4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob"></div>
-      <div class="absolute top-0 -right-4 w-96 h-96 bg-red-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-2000"></div>
-      <div class="absolute -bottom-8 left-20 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-blob animation-delay-4000"></div>
-    </div>
-
-    <!-- Grid Pattern -->
-    <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.05&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E'); opacity: 0.05;"></div>
+  <!-- Subtle Background Pattern -->
+  <div class="absolute inset-0 opacity-5">
+    <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.4&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
   </div>
 
-  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32">
-    <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 w-full">
+    <div class="text-center text-white space-y-8">
 
-      <!-- Left Content -->
-      <div class="text-white space-y-8 z-10">
-        <div class="space-y-6">
-          <!-- Badge -->
-          <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
-            <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-            <span class="text-sm font-medium">Plateforme de formation N°1 en Tunisie</span>
-          </div>
-
-          <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-            Formations certifiantes
-            <span class="block mt-2 bg-gradient-to-r from-blue-400 via-purple-400 to-red-400 text-transparent bg-clip-text">
-              Microsoft, PMI, ITIL
-            </span>
-          </h1>
-
-          <p class="text-xl md:text-2xl text-gray-300 leading-relaxed max-w-2xl">
-            avec accompagnement IA personnalisé
-          </p>
-        </div>
-
-        <!-- CTA Buttons -->
-        <div class="flex flex-col sm:flex-row gap-4 pt-4">
-          <button class="group relative px-8 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-xl hover:shadow-2xl hover:shadow-blue-500/50 transition-all duration-300 transform hover:-translate-y-1">
-            <span class="relative z-10 flex items-center justify-center gap-2">
-              Découvrir nos formations
-              <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </span>
-          </button>
-
-          <button (click)="scrollToTest()" class="group px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border border-white/20 hover:bg-white hover:text-slate-900 transition-all duration-300 transform hover:-translate-y-1">
-            <span class="flex items-center justify-center gap-2">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              <span class="hidden sm:inline">Faire un test de diagnostic gratuit</span>
-              <span class="sm:hidden">Test gratuit</span>
-            </span>
-          </button>
-        </div>
-
-        <!-- Trust Indicators -->
-        <div class="grid grid-cols-3 gap-6 pt-8 border-t border-white/10">
-          <div class="text-center">
-            <div class="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 text-transparent bg-clip-text">10+</div>
-            <div class="text-sm text-gray-400 mt-1">ans d'expérience</div>
-          </div>
-          <div class="text-center">
-            <div class="text-4xl font-bold bg-gradient-to-r from-purple-400 to-red-400 text-transparent bg-clip-text">2,500+</div>
-            <div class="text-sm text-gray-400 mt-1">Apprenants formés</div>
-          </div>
-          <div class="text-center">
-            <div class="text-4xl font-bold bg-gradient-to-r from-red-400 to-orange-400 text-transparent bg-clip-text">95%</div>
-            <div class="text-sm text-gray-400 mt-1">Taux de satisfaction</div>
-          </div>
-        </div>
+      <!-- Badge simple -->
+      <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+        <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
+        <span class="text-sm font-medium">Plateforme de formation N°1 en Tunisie</span>
       </div>
 
-      <!-- Right Content - 3D Cards -->
-      <div class="relative lg:block hidden">
-        <div class="relative z-10 space-y-6">
-          <!-- Main Card -->
-          <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 shadow-2xl transform hover:-translate-y-2 transition-all duration-300">
-            <div class="flex items-start gap-4 mb-6">
-              <div class="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl">
-                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                </svg>
-              </div>
-              <div>
-                <h3 class="text-white font-bold text-xl mb-2">Analyse IA personnalisée</h3>
-                <p class="text-gray-300 text-sm">Recommandations intelligentes basées sur votre progression</p>
-              </div>
-            </div>
-            <div class="space-y-3">
-              <div class="flex items-center gap-3">
-                <div class="w-2 h-2 bg-emerald-400 rounded-full"></div>
-                <span class="text-gray-300 text-sm">Tests pré et post-formation</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <div class="w-2 h-2 bg-blue-400 rounded-full"></div>
-                <span class="text-gray-300 text-sm">Suivi en temps réel</span>
-              </div>
-              <div class="flex items-center gap-3">
-                <div class="w-2 h-2 bg-purple-400 rounded-full"></div>
-                <span class="text-gray-300 text-sm">Attestations certifiées</span>
-              </div>
-            </div>
-          </div>
+      <!-- Titre principal sobre -->
+      <div class="space-y-4">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+          Bienvenue chez <span class="text-blue-400">SmartFuture</span>
+        </h1>
 
-          <!-- Secondary Card -->
-          <div class="bg-gradient-to-br from-blue-600/20 to-purple-600/20 backdrop-blur-lg rounded-2xl p-6 border border-white/10 ml-8 transform hover:-translate-y-2 transition-all duration-300">
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-white font-semibold">Examens Certiport</span>
-              <div class="px-3 py-1 bg-emerald-500/20 text-emerald-400 rounded-full text-xs font-medium">
-                Disponible
-              </div>
-            </div>
-            <p class="text-gray-300 text-sm">Passez vos certifications officielles dans nos centres agréés</p>
-          </div>
+        <p class="text-2xl md:text-3xl font-light text-gray-300 max-w-4xl mx-auto">
+          Le choix de la qualité, du professionnalisme et de l'innovation
+        </p>
+      </div>
+
+      <!-- Description -->
+      <p class="text-lg md:text-xl text-gray-400 max-w-3xl mx-auto leading-relaxed">
+        Formations certifiantes Microsoft, PMI, ITIL avec accompagnement personnalisé
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+        <button class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl">
+          Découvrir nos formations
+        </button>
+
+        <button (click)="scrollToTest()" class="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-lg border border-white/30 hover:bg-white/20 transition-all duration-300">
+          <span class="flex items-center justify-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Test de diagnostic gratuit
+          </span>
+        </button>
+      </div>
+
+      <!-- Trust Indicators -->
+      <div class="grid grid-cols-3 gap-8 pt-12 max-w-3xl mx-auto">
+        <div class="text-center border-r border-white/10 last:border-r-0">
+          <div class="text-4xl font-bold text-blue-400 mb-1">10+</div>
+          <div class="text-sm text-gray-400">Années d'expérience</div>
         </div>
-
-        <!-- Floating Elements -->
-        <div class="absolute -top-4 -right-4 w-24 h-24 bg-blue-500/20 rounded-full blur-2xl animate-pulse"></div>
-        <div class="absolute -bottom-4 -left-4 w-32 h-32 bg-purple-500/20 rounded-full blur-2xl animate-pulse animation-delay-2000"></div>
+        <div class="text-center border-r border-white/10 last:border-r-0">
+          <div class="text-4xl font-bold text-blue-400 mb-1">2,500+</div>
+          <div class="text-sm text-gray-400">Apprenants formés</div>
+        </div>
+        <div class="text-center">
+          <div class="text-4xl font-bold text-blue-400 mb-1">95%</div>
+          <div class="text-sm text-gray-400">Satisfaction</div>
+        </div>
       </div>
     </div>
   </div>
