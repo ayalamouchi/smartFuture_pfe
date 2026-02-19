@@ -1,0 +1,92 @@
+<section id="accueil" class="relative bg-gradient-to-br from-sf-navy via-sf-dark to-sf-navy min-h-screen flex items-center overflow-hidden">
+
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute inset-0" style="background-image: url('data:image/svg+xml,%3Csvg width=&quot;60&quot; height=&quot;60&quot; viewBox=&quot;0 0 60 60&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;%3E%3Cg fill=&quot;none&quot; fill-rule=&quot;evenodd&quot;%3E%3Cg fill=&quot;%23ffffff&quot; fill-opacity=&quot;0.4&quot;%3E%3Cpath d=&quot;M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z&quot;/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+  </div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+
+      <!-- Left Content -->
+      <div class="text-white space-y-8" data-aos="fade-right">
+        <div class="space-y-4">
+          <h1 class="text-5xl md:text-6xl font-bold leading-tight">
+            SmartFuture
+            <span class="block text-sf-red mt-2">
+              Votre partenaire formation professionnelle
+            </span>
+          </h1>
+          <p class="text-xl text-gray-300 leading-relaxed">
+            Formations certifiantes Microsoft, PMI, ITIL avec accompagnement IA personnalisé
+          </p>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4">
+          <button class="px-8 py-4 bg-sf-red text-white font-semibold rounded-lg hover:bg-red-600 transition transform hover:scale-105 shadow-xl">
+            Découvrir nos formations
+          </button>
+          <button
+            (click)="scrollToTest()"
+            class="px-8 py-4 bg-white text-sf-navy font-semibold rounded-lg hover:bg-gray-100 transition transform hover:scale-105 shadow-xl flex items-center justify-center gap-2"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Test de diagnostic gratuit
+          </button>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="flex flex-wrap items-center gap-8 pt-8">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-sf-red">10+</div>
+            <div class="text-sm text-gray-400">ans d'expérience</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-sf-red">2,500+</div>
+            <div class="text-sm text-gray-400">Apprenants formés</div>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-sf-red">95%</div>
+            <div class="text-sm text-gray-400">Satisfaction</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Content - Illustration/Image -->
+      <div class="relative" data-aos="fade-left">
+        <div class="relative z-10">
+          <!-- Replace with actual illustration or image -->
+          <div class="bg-gradient-to-br from-sf-blue to-sf-red rounded-2xl p-8 shadow-2xl">
+            <img
+              src="assets/images/hero-illustration.svg"
+              alt="Formation illustration"
+              class="w-full h-auto"
+              onerror="this.style.display='none'"
+            >
+            <!-- Fallback if image not found -->
+            <div class="aspect-square flex items-center justify-center">
+              <svg class="w-64 h-64 text-white opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- Decorative Elements -->
+        <div class="absolute -top-4 -right-4 w-72 h-72 bg-sf-red rounded-full opacity-20 blur-3xl"></div>
+        <div class="absolute -bottom-4 -left-4 w-72 h-72 bg-sf-blue rounded-full opacity-20 blur-3xl"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </svg>
+  </div>
+</section>
