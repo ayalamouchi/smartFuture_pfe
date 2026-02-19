@@ -17,35 +17,37 @@ interface Partner {
 export class About {
   partners: Partner[] = [
     {
-      name: 'Microsoft',
-      logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/512px-Microsoft_logo.svg.png',
-      website: 'https://www.microsoft.com'
-    },
-    {
       name: 'Certiport',
-      logo: 'https://logos-world.net/wp-content/uploads/2022/02/Certiport-Logo.png',
+      logo: 'assets/images/partners/certiport.png',
       website: 'https://www.certiport.com'
     },
     {
+      name: 'Microsoft',
+      logo: 'assets/images/partners/microsoft.png',
+      website: 'https://www.microsoft.com'
+    },
+    {
       name: 'Pearson VUE',
-      logo: 'https://mma.prnewswire.com/media/683230/Pearson_VUE_Logo.jpg',
+      logo: 'assets/images/partners/pearson-vue.png',
       website: 'https://home.pearsonvue.com'
     },
     {
       name: 'Python Institute',
-      logo: 'https://pythoninstitute.org/assets/627eea95c6b5250e69c4c66e/627eea95c6b5250e69c4c675_python-institute-logo.png',
+      logo: 'assets/images/partners/python-institute.png',
       website: 'https://pythoninstitute.org'
     },
     {
       name: 'Skillable',
-      logo: 'https://images.crunchbase.com/image/upload/c_pad,h_256,w_256,f_auto,q_auto:eco,dpr_1/v1488591002/vhkcmfnzwbkaqxqla7te.png',
+      logo: 'assets/images/partners/skillable.png',
       website: 'https://www.skillable.com'
     }
   ];
 
-  onImageError(event: Event) {
+  onImageError(event: Event, partner: Partner) {
     const img = event.target as HTMLImageElement;
-    // Fallback vers un placeholder générique
-    img.src = 'https://via.placeholder.com/200x80/3B82F6/FFFFFF?text=Partner+Logo';
+    console.error('❌ Erreur chargement:', partner.name, img.src);
+
+    // NE PAS utiliser placeholder externe - laisser vide ou utiliser une icône SVG
+    img.style.display = 'none';
   }
 }
