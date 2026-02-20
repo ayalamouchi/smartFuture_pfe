@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChildren, QueryList, ElementRef } fro
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-otp-verification',
@@ -14,7 +15,7 @@ export class OtpVerificationComponent implements OnInit, OnDestroy {
 
   otpCode: string[] = ['', '', '', '', '', ''];
   userEmail: string = '';
-  remainingTime: number = 300; // 5 minutes en secondes
+  remainingTime: number = 300;
   canResend: boolean = false;
   submitted: boolean = false;
   isVerifying: boolean = false;
@@ -24,19 +25,17 @@ export class OtpVerificationComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
-    // Récupérer l'email depuis les query params
     this.route.queryParams.subscribe(params => {
-      this.userEmail = params['email'] || 'example@email.com';
+      this.userEmail = params['email'] || sessionStorage.getItem('otpEmail') || '';
     });
 
-    // Démarrer le timer
     this.startTimer();
 
-    // Focus sur le premier input
     setTimeout(() => {
       const firstInput = document.querySelector('input[type="text"]') as HTMLInputElement;
       if (firstInput) {
@@ -72,13 +71,11 @@ export class OtpVerificationComponent implements OnInit, OnDestroy {
     const input = event.target;
     const value = input.value;
 
-    // Ne garder que les chiffres
     if (value && !/^\d$/.test(value)) {
       this.otpCode[index] = '';
       return;
     }
 
-    // Passer au champ suivant si un chiffre est entré
     if (value && index < 5) {
       const nextInput = input.nextElementSibling as HTMLInputElement;
       if (nextInput) {
@@ -92,7 +89,6 @@ export class OtpVerificationComponent implements OnInit, OnDestroy {
   onKeyDown(event: KeyboardEvent, index: number) {
     const input = event.target as HTMLInputElement;
 
-    // Retour arrière : passer au champ précédent
     if (event.key === 'Backspace' && !input.value && index > 0) {
       const prevInput = input.previousElementSibling as HTMLInputElement;
       if (prevInput) {
@@ -101,7 +97,6 @@ export class OtpVerificationComponent implements OnInit, OnDestroy {
       }
     }
 
-    // Flèche gauche : aller au champ précédent
     if (event.key === 'ArrowLeft' && index > 0) {
       event.preventDefault();
       const prevInput = input.previousElementSibling as HTMLInputElement;
@@ -111,7 +106,6 @@ export class OtpVerificationComponent implements OnInit, OnDestroy {
       }
     }
 
-    // Flèche droite : aller au champ suivant
     if (event.key === 'ArrowRight' && index < 5) {
       event.preventDefault();
       const nextInput = input.nextElementSibling as HTMLInputElement;
@@ -133,7 +127,6 @@ export class OtpVerificationComponent implements OnInit, OnDestroy {
       }
     });
 
-    // Focus sur le dernier champ rempli
     const lastFilledIndex = digits.length - 1;
     if (lastFilledIndex >= 0 && lastFilledIndex < 6) {
       setTimeout(() => {
@@ -150,7 +143,7 @@ export class OtpVerificationComponent implements OnInit, OnDestroy {
     return this.otpCode.every(code => code !== '');
   }
 
-  async verify() {
+  verify() {
     this.submitted = true;
 
     if (!this.isOtpComplete()) {
@@ -161,64 +154,49 @@ export class OtpVerificationComponent implements OnInit, OnDestroy {
     this.isVerifying = true;
     this.errorMessage = '';
 
-    try {
-      const code = this.otpCode.join('');
+    const code = this.otpCode.join('');
 
-      // Simuler un appel API
-      await this.simulateApiCall(code);
-
-      // Si succès, naviguer vers la page de confirmation
-      this.router.navigate(['/inscription/confirmation']);
-    } catch (error) {
-      this.errorMessage = 'Code invalide ou expiré. Veuillez réessayer.';
-      this.otpCode = ['', '', '', '', '', ''];
-      setTimeout(() => {
-        const firstInput = document.querySelector('input[type="text"]') as HTMLInputElement;
-        if (firstInput) {
-          firstInput.focus();
+    this.authService.verifyOtp(this.userEmail, code).subscribe({
+      next: (response) => {
+        if (response.success) {
+          sessionStorage.removeItem('otpEmail');
+          this.router.navigate(['/inscription/confirmation']);
         }
-      }, 100);
-    } finally {
-      this.isVerifying = false;
-    }
-  }
+      },
+      error: (error) => {
+        console.error('Erreur vérification OTP:', error);
+        this.errorMessage = error.error?.message || 'Code invalide ou expiré';
+        this.otpCode = ['', '', '', '', '', ''];
+        this.isVerifying = false;
 
-  private simulateApiCall(code: string): Promise<void> {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simuler une vérification
-        if (code === '123456') { // Code de test
-          resolve();
-        } else {
-          reject(new Error('Invalid code'));
-        }
-      }, 1500);
+        setTimeout(() => {
+          const firstInput = document.querySelector('input[type="text"]') as HTMLInputElement;
+          if (firstInput) {
+            firstInput.focus();
+          }
+        }, 100);
+      },
+      complete: () => {
+        this.isVerifying = false;
+      }
     });
   }
 
-  async resendCode() {
+  resendCode() {
     if (!this.canResend) return;
 
-    try {
-      // Simuler l'envoi d'un nouveau code
-      await new Promise(resolve => setTimeout(resolve, 1000));
+    // TODO: Implémenter le renvoi de code OTP
+    console.log('Renvoi du code OTP');
 
-      // Réinitialiser le timer
-      this.remainingTime = 300;
-      this.canResend = false;
-      this.otpCode = ['', '', '', '', '', ''];
-      this.errorMessage = '';
+    this.remainingTime = 300;
+    this.canResend = false;
+    this.otpCode = ['', '', '', '', '', ''];
+    this.errorMessage = '';
 
-      if (this.timerInterval) {
-        clearInterval(this.timerInterval);
-      }
-      this.startTimer();
-
-      // Afficher un message de succès (pourrait être un toast)
-      console.log('Code renvoyé avec succès');
-    } catch (error) {
-      this.errorMessage = 'Erreur lors de l\'envoi du code. Veuillez réessayer.';
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
     }
+    this.startTimer();
   }
 
   goBack() {
