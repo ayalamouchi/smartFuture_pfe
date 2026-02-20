@@ -17,7 +17,7 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
 
   mail:
@@ -25,7 +25,6 @@ spring:
     port: 587
     username: ayalamouchi@ieee.org
     password: triufffumbtcrtmv
-
     properties:
       mail:
         smtp:
@@ -33,7 +32,6 @@ spring:
           starttls:
             enable: true
             required: true
-        debug: false
 
 server:
   port: 8080
@@ -46,27 +44,19 @@ server:
 # JWT Configuration
 jwt:
   secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
-  expiration: 86400000  # 24 heures en millisecondes
-  refresh-expiration: 604800000  # 7 jours
+  expiration: 86400000
 
 # OTP Configuration
 otp:
   length: 6
   expiration-minutes: 5
-  max-attempts: 3
 
 # CORS
 cors:
   allowed-origins: http://localhost:4200
-  allowed-methods: GET,POST,PUT,DELETE,PATCH,OPTIONS
-  allowed-headers: "*"
-  allow-credentials: true
 
 # Logging
 logging:
   level:
     tn.smartfuture: DEBUG
     org.springframework.security: DEBUG
-    org.springframework.web: DEBUG
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
