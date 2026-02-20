@@ -32,6 +32,9 @@ spring:
           starttls:
             enable: true
             required: true
+          ssl:
+            trust: "*"
+            checkserveridentity: false
 
 server:
   port: 8080
@@ -41,22 +44,19 @@ server:
     include-message: always
     include-binding-errors: always
 
-# JWT Configuration
 jwt:
   secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
   expiration: 86400000
 
-# OTP Configuration
 otp:
   length: 6
   expiration-minutes: 5
 
-# CORS
 cors:
   allowed-origins: http://localhost:4200
 
-# Logging
 logging:
   level:
+    org.springframework.mail: DEBUG
     tn.smartfuture: DEBUG
     org.springframework.security: DEBUG
