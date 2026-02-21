@@ -1,0 +1,81 @@
+<!-- src/app/components/auth/check-email/check-email.component.html -->
+<div class="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+  <div class="w-full max-w-md text-center">
+
+    <!-- Icon -->
+    <div class="flex justify-center mb-8">
+      <div class="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center animate-scaleIn">
+        <svg class="w-12 h-12 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="bg-white rounded-xl border border-gray-200 p-8 mb-6">
+      <h1 class="text-3xl font-bold text-slate-900 mb-4">
+        Vérifiez votre email
+      </h1>
+
+      <p class="text-lg text-slate-600 mb-6">
+        Nous avons envoyé un lien de vérification à
+      </p>
+
+      <p class="text-base font-semibold text-blue-600 mb-6">
+        {{ userEmail }}
+      </p>
+
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-left">
+        <div class="flex items-start gap-3">
+          <svg class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <div class="text-sm text-slate-700">
+            <strong class="font-semibold">Important :</strong> Cliquez sur le lien dans l'email pour activer votre compte. Le lien est valide pendant 24 heures.
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-4">
+        <div class="flex items-start gap-3 text-left">
+          <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 text-sm font-bold">
+            1
+          </div>
+          <div>
+            <p class="text-sm text-slate-700">Ouvrez votre boîte email</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 text-left">
+          <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 text-sm font-bold">
+            2
+          </div>
+          <div>
+            <p class="text-sm text-slate-700">Cliquez sur le lien de vérification</p>
+          </div>
+        </div>
+
+        <div class="flex items-start gap-3 text-left">
+          <div class="w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center flex-shrink-0 text-sm font-bold">
+            3
+          </div>
+          <div>
+            <p class="text-sm text-slate-700">Commencez à utiliser SmartFuture</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-sm text-slate-500 space-y-2">
+      <p>Vous n'avez pas reçu l'email ?</p>
+      <p>Vérifiez votre dossier spam ou courrier indésirable</p>
+    </div>
+
+    <button
+      (click)="goToLogin()"
+      class="mt-6 text-blue-600 hover:text-blue-700 font-medium text-sm"
+    >
+      ← Retour à la connexion
+    </button>
+  </div>
+</div>

@@ -54,6 +54,18 @@ export class AuthService {
       })
     );
   }
+  // src/app/core/services/auth.service.ts (ajouter cette méthode)
+verifyEmailToken(token: string): Observable<ApiResponse<AuthResponse>> {
+  return this.http.get<ApiResponse<AuthResponse>>(
+    `${this.apiUrl}/verify?token=${token}`
+  ).pipe(
+    tap(response => {
+      if (response.success && response.data) {
+        this.handleAuthentication(response.data);
+      }
+    })
+  );
+}
 
   // ============ CONNEXION ============
 

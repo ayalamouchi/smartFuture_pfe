@@ -1,3 +1,4 @@
+// src/main/java/tn/smartfuture/infrastructure/adapter/out/email/EmailSenderAdapter.java
 package tn.smartfuture.infrastructure.adapter.out.email;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class EmailSenderAdapter implements EmailSender {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(to);
             message.setSubject("SmartFuture - Code de vérification");
-            message.setText(buildEmailBody(otpCode));
+            message.setText(buildOtpEmailBody(otpCode));
 
             mailSender.send(message);
             log.info("OTP email sent successfully to: {}", to);
@@ -31,7 +32,24 @@ public class EmailSenderAdapter implements EmailSender {
         }
     }
 
-    private String buildEmailBody(String otpCode) {
+    @Override
+    public void sendVerificationEmail(String to, String verificationLink) {
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(to);
+            message.setSubject("SmartFuture - Vérification de votre compte");
+            message.setText(buildVerificationEmailBody(verificationLink));
+
+            mailSender.send(message);
+            log.info("Verification email sent successfully to: {}", to);
+
+        } catch (Exception e) {
+            log.error("Failed to send verification email to: {}", to, e);
+            throw new RuntimeException("Erreur lors de l'envoi de l'email");
+        }
+    }
+
+    private String buildOtpEmailBody(String otpCode) {
         return String.format("""
             Bienvenue chez SmartFuture !
             
@@ -44,5 +62,22 @@ public class EmailSenderAdapter implements EmailSender {
             Cordialement,
             L'équipe SmartFuture
             """, otpCode);
+    }
+
+    private String buildVerificationEmailBody(String verificationLink) {
+        return String.format("""
+            Bienvenue chez SmartFuture !
+            
+            Pour activer votre compte, veuillez cliquer sur le lien ci-dessous :
+            
+            %s
+            
+            Ce lien est valide pendant 24 heures.
+            
+            Si vous n'avez pas créé de compte, veuillez ignorer cet email.
+            
+            Cordialement,
+            L'équipe SmartFuture
+            """, verificationLink);
     }
 }

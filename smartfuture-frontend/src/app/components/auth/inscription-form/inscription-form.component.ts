@@ -182,87 +182,90 @@ export class InscriptionFormComponent implements OnInit {
 
   // ============ SOUMISSION DU FORMULAIRE ============
 
-  async onSubmit() {
-    if (this.inscriptionForm.valid && !this.isSubmitting) {
-      this.isSubmitting = true;
-      this.isUploading = true;
-      this.errorMessage = '';
+  // Modifier la méthode onSubmit dans inscription-form.component.ts
 
-      try {
-        // 1. Upload des fichiers selon le rôle
-        if (this.selectedRole === 'formateur') {
-          // Upload CV et CV CNFCPP pour formateur
-          if (this.cvFile) {
-            const cvResponse = await this.uploadFile(this.cvFile, 'cv');
-            this.cvFileUrl = cvResponse.fileUrl;
-          }
-          if (this.cvCNFCPPFile) {
-            const cvCNFCPPResponse = await this.uploadFile(this.cvCNFCPPFile, 'cv-cnfcpp');
-            this.cvCNFCPPFileUrl = cvCNFCPPResponse.fileUrl;
-          }
-        } else if (this.selectedRole === 'apprenant') {
-          // Upload photo pour apprenant
-          if (this.photoFile) {
-            const photoResponse = await this.uploadFile(this.photoFile, 'photo');
-            this.photoFileUrl = photoResponse.fileUrl;
-          }
+async onSubmit() {
+  if (this.inscriptionForm.valid && !this.isSubmitting) {
+    this.isSubmitting = true;
+    this.isUploading = true;
+    this.errorMessage = '';
+
+    try {
+      // 1. Upload des fichiers selon le rôle
+      if (this.selectedRole === 'formateur') {
+        if (this.cvFile) {
+          const cvResponse = await this.uploadFile(this.cvFile, 'cv');
+          this.cvFileUrl = cvResponse.fileUrl;
         }
-
-        this.isUploading = false;
-
-        // 2. Préparer les données selon le rôle
-        const formData = this.prepareFormData();
-
-        // 3. Appeler l'API d'inscription
-        let registerObservable;
-
-        switch (this.selectedRole) {
-          case 'apprenant':
-            registerObservable = this.authService.registerLearner(formData);
-            break;
-          case 'formateur':
-            registerObservable = this.authService.registerTrainer(formData);
-            break;
-          case 'entreprise':
-            registerObservable = this.authService.registerCompany(formData);
-            break;
-          default:
-            this.errorMessage = 'Rôle non valide';
-            this.isSubmitting = false;
-            return;
+        if (this.cvCNFCPPFile) {
+          const cvCNFCPPResponse = await this.uploadFile(this.cvCNFCPPFile, 'cv-cnfcpp');
+          this.cvCNFCPPFileUrl = cvCNFCPPResponse.fileUrl;
         }
-
-        registerObservable.subscribe({
-          next: (response) => {
-            if (response.success && response.data) {
-              sessionStorage.setItem('otpEmail', formData.email);
-              this.router.navigate(['/inscription/verification'], {
-                queryParams: { email: formData.email }
-              });
-            }
-          },
-          error: (error) => {
-            console.error('Erreur inscription:', error);
-            this.errorMessage = error.error?.message || 'Une erreur est survenue lors de l\'inscription';
-            this.isSubmitting = false;
-          },
-          complete: () => {
-            this.isSubmitting = false;
-          }
-        });
-
-      } catch (error) {
-        console.error('Erreur upload:', error);
-        this.errorMessage = 'Erreur lors de l\'upload des fichiers';
-        this.isSubmitting = false;
-        this.isUploading = false;
+      } else if (this.selectedRole === 'apprenant') {
+        if (this.photoFile) {
+          const photoResponse = await this.uploadFile(this.photoFile, 'photo');
+          this.photoFileUrl = photoResponse.fileUrl;
+        }
       }
-    } else {
-      Object.keys(this.inscriptionForm.controls).forEach(key => {
-        this.inscriptionForm.get(key)?.markAsTouched();
+
+      this.isUploading = false;
+
+      // 2. Préparer les données selon le rôle
+      const formData = this.prepareFormData();
+
+      // 3. Appeler l'API d'inscription
+      let registerObservable;
+
+      switch (this.selectedRole) {
+        case 'apprenant':
+          registerObservable = this.authService.registerLearner(formData);
+          break;
+        case 'formateur':
+          registerObservable = this.authService.registerTrainer(formData);
+          break;
+        case 'entreprise':
+          registerObservable = this.authService.registerCompany(formData);
+          break;
+        default:
+          this.errorMessage = 'Rôle non valide';
+          this.isSubmitting = false;
+          return;
+      }
+
+      registerObservable.subscribe({
+        next: (response) => {
+          if (response.success && response.data) {
+            // Stocker l'email pour la page check-email
+            sessionStorage.setItem('registrationEmail', formData.email);
+
+            // Rediriger vers la page "Vérifiez votre email"
+            this.router.navigate(['/inscription/check-email'], {
+              queryParams: { email: formData.email }
+            });
+          }
+        },
+        error: (error) => {
+          console.error('Erreur inscription:', error);
+          this.errorMessage = error.error?.message || 'Une erreur est survenue lors de l\'inscription';
+          this.isSubmitting = false;
+        },
+        complete: () => {
+          this.isSubmitting = false;
+        }
       });
+
+    } catch (error) {
+      console.error('Erreur upload:', error);
+      this.errorMessage = 'Erreur lors de l\'upload des fichiers';
+      this.isSubmitting = false;
+      this.isUploading = false;
     }
+  } else {
+    Object.keys(this.inscriptionForm.controls).forEach(key => {
+      this.inscriptionForm.get(key)?.markAsTouched();
+    });
   }
+}
 
   private prepareFormData(): any {
     const baseData = {

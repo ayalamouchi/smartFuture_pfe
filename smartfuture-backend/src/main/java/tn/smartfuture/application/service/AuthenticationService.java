@@ -1,3 +1,4 @@
+// src/main/java/tn/smartfuture/application/service/AuthenticationService.java
 package tn.smartfuture.application.service;
 
 import lombok.RequiredArgsConstructor;
@@ -30,23 +31,21 @@ public class AuthenticationService implements RegisterUserUseCase, VerifyOtpUseC
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final OtpService otpService;
+    private final VerificationTokenService verificationTokenService;
     private final JwtService jwtService;
 
-    @Value("${otp.expiration-minutes:5}")
-    private int otpExpirationMinutes;
+    @Value("${verification.expiration-hours:24}")
+    private int verificationExpirationHours;
 
     @Override
     @Transactional
     public OtpSentResponse registerLearner(Object request) {
         RegisterLearnerRequest req = (RegisterLearnerRequest) request;
 
-        // Vérifier si l'email existe déjà
         if (userRepository.existsByEmail(req.getEmail())) {
             throw new UserAlreadyExistsException("Cet email est déjà utilisé");
         }
 
-        // Créer l'apprenant
         Learner learner = new Learner();
         learner.setEmail(req.getEmail());
         learner.setPhoneNumber(req.getTelephone());
@@ -64,19 +63,18 @@ public class AuthenticationService implements RegisterUserUseCase, VerifyOtpUseC
         learner.setLevel(LearnerLevel.BEGINNER);
         learner.setProfileCompletionRate(50);
 
-        // Sauvegarder
         User savedUser = userRepository.save(learner);
 
-        // Générer et envoyer OTP
-        otpService.generateAndSendOtp(savedUser.getId(), savedUser.getEmail());
+        // Générer et envoyer le lien de vérification
+        verificationTokenService.generateAndSendVerificationEmail(savedUser.getId(), savedUser.getEmail());
 
         log.info("Learner registered successfully: {}", req.getEmail());
 
         return OtpSentResponse.builder()
                 .success(true)
-                .message("Code de vérification envoyé par email")
+                .message("Email de vérification envoyé")
                 .email(req.getEmail())
-                .expirationMinutes(otpExpirationMinutes)
+                .expirationMinutes(verificationExpirationHours * 60)
                 .build();
     }
 
@@ -107,15 +105,15 @@ public class AuthenticationService implements RegisterUserUseCase, VerifyOtpUseC
         trainer.setIsValidated(false);
 
         User savedUser = userRepository.save(trainer);
-        otpService.generateAndSendOtp(savedUser.getId(), savedUser.getEmail());
+        verificationTokenService.generateAndSendVerificationEmail(savedUser.getId(), savedUser.getEmail());
 
         log.info("Trainer registered successfully: {}", req.getEmail());
 
         return OtpSentResponse.builder()
                 .success(true)
-                .message("Code de vérification envoyé par email")
+                .message("Email de vérification envoyé")
                 .email(req.getEmail())
-                .expirationMinutes(otpExpirationMinutes)
+                .expirationMinutes(verificationExpirationHours * 60)
                 .build();
     }
 
@@ -141,26 +139,35 @@ public class AuthenticationService implements RegisterUserUseCase, VerifyOtpUseC
         company.setAddress(req.getAddress());
 
         User savedUser = userRepository.save(company);
-        otpService.generateAndSendOtp(savedUser.getId(), savedUser.getEmail());
+        verificationTokenService.generateAndSendVerificationEmail(savedUser.getId(), savedUser.getEmail());
 
         log.info("Company registered successfully: {}", req.getEmail());
 
         return OtpSentResponse.builder()
                 .success(true)
-                .message("Code de vérification envoyé par email")
+                .message("Email de vérification envoyé")
                 .email(req.getEmail())
-                .expirationMinutes(otpExpirationMinutes)
+                .expirationMinutes(verificationExpirationHours * 60)
                 .build();
     }
 
     @Override
     @Transactional
     public AuthResponse verifyOtp(String email, String code) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
+        // Cette méthode n'est plus utilisée avec le système de token
+        // Garder pour compatibilité
+        throw new UnsupportedOperationException("Utiliser verifyToken à la place");
+    }
 
-        // Vérifier le code OTP
-        otpService.verifyOtp(user.getId(), code);
+    @Transactional
+    public AuthResponse verifyToken(String token) {
+        // Vérifier le token
+        verificationTokenService.verifyToken(token);
+
+        // Récupérer l'utilisateur
+        Long userId = verificationTokenService.getUserIdFromToken(token);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
 
         // Activer le compte
         user.setEmailVerified(true);
@@ -168,12 +175,12 @@ public class AuthenticationService implements RegisterUserUseCase, VerifyOtpUseC
         userRepository.save(user);
 
         // Générer le token JWT
-        String token = jwtService.generateToken(user.getEmail(), user.getRole(), user.getId());
+        String jwtToken = jwtService.generateToken(user.getEmail(), user.getRole(), user.getId());
 
-        log.info("OTP verified successfully for user: {}", email);
+        log.info("Email verified successfully for user: {}", user.getEmail());
 
         return AuthResponse.builder()
-                .token(token)
+                .token(jwtToken)
                 .role(user.getRole())
                 .email(user.getEmail())
                 .emailVerified(true)
@@ -187,26 +194,21 @@ public class AuthenticationService implements RegisterUserUseCase, VerifyOtpUseC
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UserNotFoundException("Email ou mot de passe incorrect"));
 
-        // Vérifier le rôle
         if (!user.getRole().equals(role)) {
             throw new InvalidOtpException("Rôle incorrect pour cet utilisateur");
         }
 
-        // Vérifier le mot de passe
         if (!passwordEncoder.matches(password, user.getPasswordHash())) {
             throw new InvalidOtpException("Email ou mot de passe incorrect");
         }
 
-        // Vérifier que l'email est vérifié
         if (!user.getEmailVerified()) {
             throw new InvalidOtpException("Veuillez vérifier votre email avant de vous connecter");
         }
 
-        // Mettre à jour lastLogin
         user.setLastLogin(LocalDateTime.now());
         userRepository.save(user);
 
-        // Générer le token
         String token = jwtService.generateToken(user.getEmail(), user.getRole(), user.getId());
 
         log.info("User logged in successfully: {}", email);

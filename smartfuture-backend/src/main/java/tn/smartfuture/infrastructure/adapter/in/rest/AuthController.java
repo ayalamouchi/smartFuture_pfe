@@ -1,3 +1,4 @@
+// src/main/java/tn/smartfuture/infrastructure/adapter/in/rest/AuthController.java
 package tn.smartfuture.infrastructure.adapter.in.rest;
 
 import jakarta.validation.Valid;
@@ -71,21 +72,18 @@ public class AuthController {
         );
     }
 
-    @PostMapping("/verify-otp")
-    public ResponseEntity<ApiResponse<AuthResponse>> verifyOtp(
-            @Valid @RequestBody VerifyOtpRequest request
+    @GetMapping("/verify")
+    public ResponseEntity<ApiResponse<AuthResponse>> verifyEmail(
+            @RequestParam("token") String token
     ) {
-        log.info("Verifying OTP for: {}", request.getEmail());
+        log.info("Verifying email with token");
 
-        AuthResponse response = authenticationService.verifyOtp(
-                request.getEmail(),
-                request.getCode()
-        );
+        AuthResponse response = authenticationService.verifyToken(token);
 
         return ResponseEntity.ok(
                 ApiResponse.<AuthResponse>builder()
                         .success(true)
-                        .message("Vérification réussie")
+                        .message("Email vérifié avec succès")
                         .data(response)
                         .build()
         );
