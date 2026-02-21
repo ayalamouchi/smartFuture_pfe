@@ -27,10 +27,9 @@ public class SecurityConfig {
                 .cors(cors -> cors.configure(http))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**", "/upload/**").permitAll()  // ← Ajouter /upload
-                .anyRequest().authenticated()
-
-        )
+                        .requestMatchers("/auth/**", "/upload/**", "/admin-setup/**").permitAll()  // ← AJOUT DE /admin-setup/**
+                        .anyRequest().authenticated()
+                )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
