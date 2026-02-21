@@ -15,6 +15,8 @@ import tn.smartfuture.application.service.AuthenticationService;
 import tn.smartfuture.application.service.PasswordResetService;
 import tn.smartfuture.domain.enums.UserRole;
 
+import java.util.Map;  // ← AJOUT DE L'IMPORT
+
 @Slf4j
 @RestController
 @RequestMapping("/auth")
@@ -103,9 +105,7 @@ public class AuthController {
         );
     }
 
-    // FICHIER: smartfuture-backend/src/main/java/tn/smartfuture/infrastructure/adapter/in/rest/AuthController.java
-
-// ============ CONNEXION ADMIN CORRIGÉE ============
+    // ============ CONNEXION ADMIN CORRIGÉE ============
 
     @PostMapping("/admin/login")
     public ResponseEntity<ApiResponse<AuthResponse>> adminLogin(
@@ -116,7 +116,7 @@ public class AuthController {
 
         log.info("Admin login attempt for: {}", email);
 
-        // Forcer le rôle ADMIN
+        // Forcer le rôle ADMIN (le backend décide)
         AuthResponse response = authenticationService.login(
                 email,
                 password,
