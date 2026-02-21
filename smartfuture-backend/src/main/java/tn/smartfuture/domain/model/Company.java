@@ -16,6 +16,7 @@ public class Company extends User {
     private String companyName;
     private String contactName;
     private String address;
+    private String ville;  // ← AJOUTER CECI
     private CompanyType accountType;
     private BigDecimal budgetAllocated;
     private BigDecimal budgetConsumed;

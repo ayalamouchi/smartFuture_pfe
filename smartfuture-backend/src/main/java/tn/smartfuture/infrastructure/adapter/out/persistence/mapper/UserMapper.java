@@ -66,8 +66,8 @@ public class UserMapper {
         learner.setLastName(entity.getLastName());
         learner.setCompany(entity.getCompany());
         learner.setVille(entity.getVille());
-        entity.setFonction(learner.getFonction());
-        entity.setProfilePicture(learner.getProfilePicture());
+        learner.setFonction(entity.getFonction());  // ✅ CORRIGÉ
+        learner.setProfilePicture(entity.getProfilePicture());  // ✅ CORRIGÉ
         learner.setLevel(entity.getLevel());
         learner.setProfileCompletionRate(entity.getProfileCompletionRate());
         return learner;
@@ -131,6 +131,7 @@ public class UserMapper {
         entity.setCompanyName(company.getCompanyName());
         entity.setContactName(company.getContactName());
         entity.setAddress(company.getAddress());
+        entity.setVille(company.getVille());  // ✅ AJOUTÉ
         entity.setAccountType(company.getAccountType());
         entity.setBudgetAllocated(company.getBudgetAllocated());
         entity.setBudgetConsumed(company.getBudgetConsumed());
@@ -151,6 +152,7 @@ public class UserMapper {
         company.setCompanyName(entity.getCompanyName());
         company.setContactName(entity.getContactName());
         company.setAddress(entity.getAddress());
+        company.setVille(entity.getVille());  // ✅ AJOUTÉ
         company.setAccountType(entity.getAccountType());
         company.setBudgetAllocated(entity.getBudgetAllocated());
         company.setBudgetConsumed(entity.getBudgetConsumed());

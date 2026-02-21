@@ -26,9 +26,9 @@ public class LearnerEntity extends UserEntity {
 
     @Column(nullable = false)
     private String ville;
-    @Column(nullable = false)
+
     private String fonction;
-    @Column(nullable = false)
+
     private String profilePicture;
 
     @Enumerated(EnumType.STRING)
