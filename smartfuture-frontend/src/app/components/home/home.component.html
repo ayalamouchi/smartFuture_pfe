@@ -21,4 +21,10 @@
   <section id="contact">
     <app-footer></app-footer>
   </section>
+
+  <!-- Hidden Admin Modal -->
+  <app-admin-login-modal
+    *ngIf="showAdminModal"
+    (close)="closeAdminModal()"
+  ></app-admin-login-modal>
 </div>
