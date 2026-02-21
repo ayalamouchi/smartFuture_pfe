@@ -39,14 +39,24 @@ public class EmailSenderAdapter implements EmailSender {
     @Override
     public void sendVerificationEmail(String to, String verificationLink) {
         try {
+            // Préparer le contexte Thymeleaf
+            Context context = new Context();
+            context.setVariable("verificationLink", verificationLink);
+
+            // Générer le HTML depuis le template
+            String htmlContent = templateEngine.process("verification-email", context);
+
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
             helper.setTo(to);
+            helper.setFrom("noreply@smartfuture.tn", "SmartFuture");
             helper.setSubject("SmartFuture - Vérification de votre compte");
-            helper.setText(buildVerificationEmailBody(verificationLink), false);
+            helper.setText(htmlContent, true); // true = HTML
+
             mailSender.send(message);
             log.info("Verification email sent to: {}", to);
-        } catch (MessagingException e) {
+
+        } catch (Exception e) {
             log.error("Failed to send verification email to: {}", to, e);
             throw new RuntimeException("Erreur lors de l'envoi de l'email");
         }
