@@ -39,32 +39,35 @@ export class AdminLoginModalComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    if (this.adminForm.valid && !this.isLoading) {
-      this.isLoading = true;
-      this.errorMessage = '';
+  if (this.adminForm.valid && !this.isLoading) {
+    this.isLoading = true;
+    this.errorMessage = '';
 
-      const { email, password } = this.adminForm.value;
+    const { email, password } = this.adminForm.value;
 
-      this.authService.login(email, password, UserRole.ADMIN).subscribe({
-        next: (response) => {
-          this.isLoading = false;
-          if (response.success && response.data) {
-            localStorage.setItem('isAdmin', 'true');
-            this.closeModal();
-            this.router.navigate(['/admin/dashboard']);
-          }
-        },
-        error: (error) => {
-          this.isLoading = false;
-          this.errorMessage = error.error?.message || 'Identifiants incorrects';
+    // Utiliser loginAdmin au lieu de login
+    this.authService.loginAdmin(email, password).subscribe({
+      next: (response) => {
+        this.isLoading = false;
+        if (response.success && response.data) {
+          localStorage.setItem('isAdmin', 'true');
+          this.closeModal();
+          this.router.navigate(['/admin/dashboard']);
         }
-      });
-    } else {
-      Object.keys(this.adminForm.controls).forEach(key =>
-        this.adminForm.get(key)?.markAsTouched()
-      );
-    }
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.errorMessage = error.error?.message || 'Identifiants incorrects';
+        console.error('Erreur login admin:', error);
+      }
+    });
+  } else {
+    // Marquer tous les champs comme touchés pour afficher les erreurs
+    Object.keys(this.adminForm.controls).forEach(key =>
+      this.adminForm.get(key)?.markAsTouched()
+    );
   }
+}
 
   closeModal() {
     this.close.emit();

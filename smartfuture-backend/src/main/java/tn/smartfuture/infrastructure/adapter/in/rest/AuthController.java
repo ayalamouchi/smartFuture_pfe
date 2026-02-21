@@ -13,7 +13,7 @@ import tn.smartfuture.application.dto.response.AuthResponse;
 import tn.smartfuture.application.dto.response.OtpSentResponse;
 import tn.smartfuture.application.service.AuthenticationService;
 import tn.smartfuture.application.service.PasswordResetService;
-import tn.smartfuture.domain.enums.UserRole;  
+import tn.smartfuture.domain.enums.UserRole;
 
 @Slf4j
 @RestController
@@ -103,16 +103,23 @@ public class AuthController {
         );
     }
 
+    // FICHIER: smartfuture-backend/src/main/java/tn/smartfuture/infrastructure/adapter/in/rest/AuthController.java
+
+// ============ CONNEXION ADMIN CORRIGÉE ============
+
     @PostMapping("/admin/login")
     public ResponseEntity<ApiResponse<AuthResponse>> adminLogin(
-            @Valid @RequestBody LoginRequest request
+            @RequestBody Map<String, String> request
     ) {
-        log.info("Admin login attempt for: {}", request.getEmail());
+        String email = request.get("email");
+        String password = request.get("password");
+
+        log.info("Admin login attempt for: {}", email);
 
         // Forcer le rôle ADMIN
         AuthResponse response = authenticationService.login(
-                request.getEmail(),
-                request.getPassword(),
+                email,
+                password,
                 UserRole.ADMIN
         );
 

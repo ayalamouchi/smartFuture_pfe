@@ -105,19 +105,21 @@ requestPasswordReset(email: string): Observable<ApiResponse<void>> {
   }
 
   loginAdmin(email: string, password: string): Observable<ApiResponse<AuthResponse>> {
+  // Ne pas envoyer le champ "role" - le backend le force à ADMIN
   return this.http.post<ApiResponse<AuthResponse>>(
     `${this.apiUrl}/admin/login`,
-    { email, password, role: UserRole.ADMIN }
+    { email, password }  // ← Pas de "role"
   ).pipe(
     tap(response => {
       if (response.success && response.data) {
         this.handleAuthentication(response.data);
-        // Stocker un flag admin
         localStorage.setItem('isAdmin', 'true');
       }
     })
   );
 }
+
+
 
   // ============ GESTION TOKEN ============
 
