@@ -104,6 +104,21 @@ requestPasswordReset(email: string): Observable<ApiResponse<void>> {
     );
   }
 
+  loginAdmin(email: string, password: string): Observable<ApiResponse<AuthResponse>> {
+  return this.http.post<ApiResponse<AuthResponse>>(
+    `${this.apiUrl}/admin/login`,
+    { email, password, role: UserRole.ADMIN }
+  ).pipe(
+    tap(response => {
+      if (response.success && response.data) {
+        this.handleAuthentication(response.data);
+        // Stocker un flag admin
+        localStorage.setItem('isAdmin', 'true');
+      }
+    })
+  );
+}
+
   // ============ GESTION TOKEN ============
 
   private handleAuthentication(authResponse: AuthResponse): void {

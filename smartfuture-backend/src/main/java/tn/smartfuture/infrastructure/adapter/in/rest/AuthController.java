@@ -13,6 +13,7 @@ import tn.smartfuture.application.dto.response.AuthResponse;
 import tn.smartfuture.application.dto.response.OtpSentResponse;
 import tn.smartfuture.application.service.AuthenticationService;
 import tn.smartfuture.application.service.PasswordResetService;
+import tn.smartfuture.domain.enums.UserRole;  
 
 @Slf4j
 @RestController
@@ -97,6 +98,28 @@ public class AuthController {
                 ApiResponse.<AuthResponse>builder()
                         .success(true)
                         .message("Connexion réussie")
+                        .data(response)
+                        .build()
+        );
+    }
+
+    @PostMapping("/admin/login")
+    public ResponseEntity<ApiResponse<AuthResponse>> adminLogin(
+            @Valid @RequestBody LoginRequest request
+    ) {
+        log.info("Admin login attempt for: {}", request.getEmail());
+
+        // Forcer le rôle ADMIN
+        AuthResponse response = authenticationService.login(
+                request.getEmail(),
+                request.getPassword(),
+                UserRole.ADMIN
+        );
+
+        return ResponseEntity.ok(
+                ApiResponse.<AuthResponse>builder()
+                        .success(true)
+                        .message("Connexion administrateur réussie")
                         .data(response)
                         .build()
         );

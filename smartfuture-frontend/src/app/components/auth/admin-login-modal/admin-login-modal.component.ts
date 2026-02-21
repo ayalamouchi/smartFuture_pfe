@@ -2,6 +2,8 @@ import { Component, EventEmitter, Output, OnInit, OnDestroy } from '@angular/cor
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
+import { UserRole } from '../../../core/models/user.model';
 
 @Component({
   selector: 'app-admin-login-modal',
@@ -16,10 +18,12 @@ export class AdminLoginModalComponent implements OnInit, OnDestroy {
   isLoading = false;
   showPassword = false;
   errorMessage = '';
-  private keySequence = '';
-  private keyTimeout: any;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.adminForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -27,7 +31,6 @@ export class AdminLoginModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // Bloquer le scroll du body
     document.body.style.overflow = 'hidden';
   }
 
@@ -42,16 +45,20 @@ export class AdminLoginModalComponent implements OnInit, OnDestroy {
 
       const { email, password } = this.adminForm.value;
 
-      // TODO: Appeler l'API admin login
-      // this.authService.loginAdmin(email, password).subscribe(...)
-      console.log('Admin login:', email);
-
-      // Simulation (à remplacer par l'appel API)
-      setTimeout(() => {
-        this.isLoading = false;
-        // this.router.navigate(['/admin/dashboard']);
-        this.errorMessage = 'API admin non configurée.';
-      }, 1000);
+      this.authService.login(email, password, UserRole.ADMIN).subscribe({
+        next: (response) => {
+          this.isLoading = false;
+          if (response.success && response.data) {
+            localStorage.setItem('isAdmin', 'true');
+            this.closeModal();
+            this.router.navigate(['/admin/dashboard']);
+          }
+        },
+        error: (error) => {
+          this.isLoading = false;
+          this.errorMessage = error.error?.message || 'Identifiants incorrects';
+        }
+      });
     } else {
       Object.keys(this.adminForm.controls).forEach(key =>
         this.adminForm.get(key)?.markAsTouched()

@@ -202,7 +202,8 @@ public class AuthenticationService implements RegisterUserUseCase, VerifyOtpUseC
             throw new InvalidOtpException("Email ou mot de passe incorrect");
         }
 
-        if (!user.getEmailVerified()) {
+        // Admin bypass la vérification email
+        if (!user.getEmailVerified() && !UserRole.ADMIN.equals(user.getRole())) {
             throw new InvalidOtpException("Veuillez vérifier votre email avant de vous connecter");
         }
 
@@ -224,6 +225,10 @@ public class AuthenticationService implements RegisterUserUseCase, VerifyOtpUseC
             lastName = trainer.getLastName();
         } else if (user instanceof Company company) {
             firstName = company.getContactName();
+            lastName = "";
+        }
+        else if (user instanceof Administrator) {
+            firstName = "Administrateur";
             lastName = "";
         }
 

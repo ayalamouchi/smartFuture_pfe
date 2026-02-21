@@ -3,6 +3,7 @@ package tn.smartfuture.infrastructure.adapter.out.persistence.mapper;
 import org.springframework.stereotype.Component;
 import tn.smartfuture.domain.model.*;
 import tn.smartfuture.infrastructure.adapter.out.persistence.entity.*;
+import tn.smartfuture.domain.enums.UserRole;
 
 @Component
 public class UserMapper {
@@ -14,6 +15,8 @@ public class UserMapper {
             return toTrainerEntity(trainer);
         } else if (user instanceof Company company) {
             return toCompanyEntity(company);
+        } else if (user instanceof Administrator admin) {
+            return toAdminEntity(admin);
         }
         throw new IllegalArgumentException("Unknown user type");
     }
@@ -25,6 +28,10 @@ public class UserMapper {
             return toTrainerDomain(trainerEntity);
         } else if (entity instanceof CompanyEntity companyEntity) {
             return toCompanyDomain(companyEntity);
+        }
+        // Si c'est un UserEntity basique (ADMIN), retourner un Administrator
+        if (entity.getRole() == UserRole.ADMIN) {
+            return toAdminDomain(entity);
         }
         throw new IllegalArgumentException("Unknown entity type");
     }
@@ -157,5 +164,32 @@ public class UserMapper {
         company.setBudgetAllocated(entity.getBudgetAllocated());
         company.setBudgetConsumed(entity.getBudgetConsumed());
         return company;
+    }
+    private UserEntity toAdminEntity(Administrator admin) {
+        UserEntity entity = new UserEntity();
+        entity.setId(admin.getId());
+        entity.setEmail(admin.getEmail());
+        entity.setPhoneNumber(admin.getPhoneNumber());
+        entity.setPasswordHash(admin.getPasswordHash());
+        entity.setRole(admin.getRole());
+        entity.setStatus(admin.getStatus());
+        entity.setEmailVerified(admin.getEmailVerified());
+        entity.setCreatedAt(admin.getCreatedAt());
+        entity.setLastLogin(admin.getLastLogin());
+        return entity;
+    }
+
+    private Administrator toAdminDomain(UserEntity entity) {
+        Administrator admin = new Administrator();
+        admin.setId(entity.getId());
+        admin.setEmail(entity.getEmail());
+        admin.setPhoneNumber(entity.getPhoneNumber());
+        admin.setPasswordHash(entity.getPasswordHash());
+        admin.setRole(entity.getRole());
+        admin.setStatus(entity.getStatus());
+        admin.setEmailVerified(entity.getEmailVerified());
+        admin.setCreatedAt(entity.getCreatedAt());
+        admin.setLastLogin(entity.getLastLogin());
+        return admin;
     }
 }

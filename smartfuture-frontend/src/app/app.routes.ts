@@ -11,6 +11,8 @@ import { ConfirmationSuccessComponent } from './components/auth/confirmation-suc
 import { LoginComponent } from './components/auth/login/login.component';
 import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
+import { AdminDashboardComponent } from './components/admin/dashboard/admin-dashboard.component';
+
 
 export const routes: Routes = [
   // Page d'accueil
@@ -22,6 +24,8 @@ export const routes: Routes = [
   { path: 'inscription/check-email', component: CheckEmailComponent },
   { path: 'inscription/verify', component: EmailVerificationComponent },
   { path: 'inscription/confirmation', component: ConfirmationSuccessComponent },
+  { path: 'admin/dashboard', component: AdminDashboardComponent },
+
 
   // Connexion
   { path: 'connexion', component: LoginComponent },
