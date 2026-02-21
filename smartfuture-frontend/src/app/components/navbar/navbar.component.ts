@@ -1,11 +1,11 @@
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';  // ← Ajouter ceci
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './navbar.component.html'
 })
 export class NavbarComponent {
@@ -19,6 +19,8 @@ export class NavbarComponent {
     { id: 'examens', label: 'Examens Certiport' },
     { id: 'contact', label: 'Contact' }
   ];
+
+  constructor(private router: Router) {}
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -43,5 +45,15 @@ export class NavbarComponent {
 
       this.isMenuOpen = false;
     }
+  }
+
+  goToLogin() {
+    this.router.navigate(['/connexion']);
+    this.isMenuOpen = false;
+  }
+
+  goToRegister() {
+    this.router.navigate(['/inscription/role']);
+    this.isMenuOpen = false;
   }
 }

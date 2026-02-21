@@ -185,6 +185,17 @@ export class InscriptionFormComponent implements OnInit {
   // Modifier la méthode onSubmit dans inscription-form.component.ts
 
 async onSubmit() {
+  console.log('Form Valid:', this.inscriptionForm.valid);
+  console.log('Form Errors:', this.inscriptionForm.errors);
+  console.log('Form Values:', this.inscriptionForm.value);
+
+  // Log des erreurs par champ
+  Object.keys(this.inscriptionForm.controls).forEach(key => {
+    const control = this.inscriptionForm.get(key);
+    if (control?.invalid) {
+      console.log(`${key} errors:`, control.errors);
+    }
+  });
   if (this.inscriptionForm.valid && !this.isSubmitting) {
     this.isSubmitting = true;
     this.isUploading = true;
