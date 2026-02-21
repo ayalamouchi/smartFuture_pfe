@@ -20,7 +20,6 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
 
-  # Configuration multipart pour upload de fichiers
   servlet:
     multipart:
       enabled: true
@@ -43,6 +42,13 @@ spring:
             trust: "*"
             checkserveridentity: false
 
+  # Thymeleaf - désactiver le cache en dev
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: UTF-8
+
 server:
   port: 8080
   servlet:
@@ -55,16 +61,17 @@ jwt:
   secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
   expiration: 86400000
 
-# Configuration OTP (gardée pour compatibilité, mais non utilisée avec le nouveau système)
 otp:
   length: 6
   expiration-minutes: 5
 
-# Configuration pour le système de vérification par email
 verification:
   expiration-hours: 24
 
-# Configuration de l'application
+# Configuration réinitialisation mot de passe
+password-reset:
+  expiration-hours: 24
+
 app:
   frontend:
     url: http://localhost:4200
@@ -78,7 +85,6 @@ logging:
     tn.smartfuture: DEBUG
     org.springframework.security: DEBUG
 
-# Configuration upload de fichiers
 file:
   upload:
     dir: uploads

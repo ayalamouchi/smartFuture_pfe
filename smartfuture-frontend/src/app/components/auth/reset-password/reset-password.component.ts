@@ -102,7 +102,7 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.resetPasswordForm.valid && !isLoading) {
+    if (this.resetPasswordForm.valid && !this.isLoading) {
       this.isLoading = true;
       this.errorMessage = '';
       this.successMessage = '';
