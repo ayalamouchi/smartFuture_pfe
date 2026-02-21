@@ -40,6 +40,7 @@ export class AuthService {
     );
   }
 
+
   // ============ VÉRIFICATION OTP ============
 
   verifyOtp(email: string, code: string): Observable<ApiResponse<AuthResponse>> {
@@ -55,7 +56,8 @@ export class AuthService {
     );
   }
   // src/app/core/services/auth.service.ts (ajouter cette méthode)
-verifyEmailToken(token: string): Observable<ApiResponse<AuthResponse>> {
+verifyEmailToken(token: string): Observable<ApiResponse<AuthResponse>>
+{
   return this.http.get<ApiResponse<AuthResponse>>(
     `${this.apiUrl}/verify?token=${token}`
   ).pipe(
@@ -66,6 +68,26 @@ verifyEmailToken(token: string): Observable<ApiResponse<AuthResponse>> {
     })
   );
 }
+
+requestPasswordReset(email: string): Observable<ApiResponse<void>> {
+    return this.http.post<ApiResponse<void>>(
+      `${this.apiUrl}/password/forgot`,
+      { email }
+    );
+  }
+
+  validatePasswordResetToken(token: string): Observable<ApiResponse<void>> {
+    return this.http.get<ApiResponse<void>>(
+      `${this.apiUrl}/password/validate-token?token=${token}`
+    );
+  }
+
+  resetPassword(token: string, newPassword: string, confirmPassword: string): Observable<ApiResponse<void>> {
+    return this.http.post<ApiResponse<void>>(
+      `${this.apiUrl}/password/reset`,
+      { token, newPassword, confirmPassword }
+    );
+  }
 
   // ============ CONNEXION ============
 
@@ -132,4 +154,5 @@ verifyEmailToken(token: string): Observable<ApiResponse<AuthResponse>> {
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
   }
+
 }

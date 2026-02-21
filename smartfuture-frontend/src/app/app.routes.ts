@@ -9,6 +9,8 @@ import { CheckEmailComponent } from './components/auth/check-email/check-email.c
 import { EmailVerificationComponent } from './components/auth/email-verification/email-verification.component';
 import { ConfirmationSuccessComponent } from './components/auth/confirmation-success/confirmation-success.component';
 import { LoginComponent } from './components/auth/login/login.component';
+import { ForgotPasswordComponent } from './components/auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/auth/reset-password/reset-password.component';
 
 export const routes: Routes = [
   // Page d'accueil
@@ -23,6 +25,10 @@ export const routes: Routes = [
 
   // Connexion
   { path: 'connexion', component: LoginComponent },
+
+  // Réinitialisation de mot de passe
+  { path: 'mot-de-passe-oublie', component: ForgotPasswordComponent },
+  { path: 'mot-de-passe/reinitialiser', component: ResetPasswordComponent },
 
   // Redirection par défaut
   { path: '**', redirectTo: '' }
