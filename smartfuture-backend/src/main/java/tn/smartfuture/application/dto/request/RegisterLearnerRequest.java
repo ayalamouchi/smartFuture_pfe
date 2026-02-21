@@ -41,4 +41,6 @@ public class RegisterLearnerRequest {
     private Boolean accepteConditions = false;
     private Boolean accepteConfidentialite = false;
     private Boolean accepteNewsletter = false;
+    private String fonction; // Job/Fonction
+    private String profilePictureUrl; // URL de la photo uploadée
 }

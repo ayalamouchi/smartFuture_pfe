@@ -44,6 +44,8 @@ public class UserMapper {
         entity.setLastName(learner.getLastName());
         entity.setCompany(learner.getCompany());
         entity.setVille(learner.getVille());
+        entity.setFonction(learner.getFonction());
+        entity.setProfilePicture(learner.getProfilePicture());
         entity.setLevel(learner.getLevel());
         entity.setProfileCompletionRate(learner.getProfileCompletionRate());
         return entity;
@@ -64,6 +66,8 @@ public class UserMapper {
         learner.setLastName(entity.getLastName());
         learner.setCompany(entity.getCompany());
         learner.setVille(entity.getVille());
+        entity.setFonction(learner.getFonction());
+        entity.setProfilePicture(learner.getProfilePicture());
         learner.setLevel(entity.getLevel());
         learner.setProfileCompletionRate(entity.getProfileCompletionRate());
         return learner;

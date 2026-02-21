@@ -59,6 +59,8 @@ public class AuthenticationService implements RegisterUserUseCase, VerifyOtpUseC
         learner.setLastName(req.getNom());
         learner.setCompany(req.getCompany());
         learner.setVille(req.getVille());
+        learner.setFonction(req.getFonction());
+        learner.setProfilePicture(req.getProfilePictureUrl());
         learner.setLevel(LearnerLevel.BEGINNER);
         learner.setProfileCompletionRate(50);
 

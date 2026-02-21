@@ -17,4 +17,6 @@ public class Learner extends User {
     private String ville;
     private LearnerLevel level;
     private Integer profileCompletionRate;
+    private String fonction;
+    private String profilePicture;
 }
